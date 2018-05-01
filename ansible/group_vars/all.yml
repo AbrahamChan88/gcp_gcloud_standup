@@ -1,5 +1,20 @@
 ---
-project_id: iwcs-test
-debug: False
+project_id: test
+owner: someone@domain.com
 region_zone: us-west1-a
+project_tags:
+  - cp_pub_control: "yvr-{{ namespace }}-pub-control"
+  - cp_to_ppd_control: "yvr-{{ namespace }}-preprod-control-control-pane"
+  - cp_to_prd_control: "yvr-{{ namespace }}-prod-control-control-pane"
+  - ppd_control_to_dmz: "yvr-{{ namespace }}-preprod-control-dmz"
+  - ppd_control_to_sdmz: "yvr-{{ namespace }}-preprod-control-sdmz"
+  - ppd_control_to_db: "yvr-{{ namespace }}-preprod-control-db"
+  - ppd_dmz_to_sdmz: "yvr-{{ namespace }}-preprod-sdmz"
+  - ppd_sdmz_to_db: "yvr-{{ namespace }}-preprod-db"
+  - prd_control_to_dmz: "yvr-{{ namespace }}-prod-control-dmz"
+  - prd_control_to_sdmz: "yvr-{{ namespace }}-prod-control-sdmz"
+  - prd_control_to_db: "yvr-{{ namespace }}-prod-control-db"
+  - prd_dmz_to_sdmz: "yvr-{{ namespace }}-prod-sdmz"
+  - prd_sdmz_to_db: "yvr-{{ namespace }}-prod-db"
+debug: False
 ...

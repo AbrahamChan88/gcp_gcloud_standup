@@ -9,7 +9,7 @@ fw_network:
     fw_action: "ALLOW"
     fw_rules: "{{ ports_external_inbound_bastion }}"
     fw_source_range: "{{ ip_external_inbound_bastion }}"
-    fw_target: "yvr-{{ namespace }}-pub-control"
+    fw_target: "{{ cp_pub_control }}"
 #Bastion firewall rule to preproduction env
   - fw_name: "fw-yvr-{{ namespace }}-preprod-control"
     fw_description: "Allow control pane inbound to preproduction network (all subnets)."
@@ -40,7 +40,7 @@ fw_network:
     fw_action: "ALLOW"
     fw_rules: "{{ ports_https_ssh }}"
     fw_source_range: "{{ ip_range_preprod_dmz }}"
-    fw_target: "yvr-{{ namespace }}-preprod-sdmz"
+    fw_target: "{{ ppd_dmz_to_sdmz }}"
 #PreProduction firewall rule SDMZ to DB
   - fw_name: "fw-yvr-{{ namespace }}-preprod-sdmz-to-db"
     fw_description: "Allow inbound traffic to preproduction db from sdmz."
@@ -50,7 +50,7 @@ fw_network:
     fw_action: "ALLOW"
     fw_rules: "{{ ports_https_ssh }}"
     fw_source_range: "{{ ip_range_preprod_sdmz }}"
-    fw_target: "yvr-{{ namespace }}-preprod-db"
+    fw_target: "{{ ppd_sdmz_to_db }}"
 #Production firewall rule Palto to DMZ, not created yet.
 #Production firewall rule DMZ to SDMZ
   - fw_name: "fw-yvr-{{ namespace }}-prod-dmz-to-sdmz"
@@ -61,7 +61,7 @@ fw_network:
     fw_action: "ALLOW"
     fw_rules: "{{ ports_https_ssh }}"
     fw_source_range: "{{ ip_range_prod_dmz }}"
-    fw_target: "yvr-{{ namespace }}-prod-sdmz"
+    fw_target: "{{ prd_dmz_to_sdmz }}"
 #Production firewall rule SDMZ to DB
   - fw_name: "fw-yvr-{{ namespace }}-prod-sdmz-to-db"
     fw_description: "Allow inbound traffic to production db from sdmz."
@@ -71,5 +71,5 @@ fw_network:
     fw_action: "ALLOW"
     fw_rules: "{{ ports_https_ssh }}"
     fw_source_range: "{{ ip_range_prod_sdmz }}"
-    fw_target: "yvr-{{ namespace }}-prod-db"
+    fw_target: "{{ prd_sdmz_to_db }}"
 ...

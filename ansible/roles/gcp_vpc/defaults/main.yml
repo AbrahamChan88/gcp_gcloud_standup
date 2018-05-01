@@ -1,7 +1,7 @@
 ---
 #Control Pane should be converted to Shared VPC - Eric/CHC will do this for me - https://cloud.google.com/vpc/docs/provisioning-shared-vpc
 vpc_network_control:
-  - vpc_name: "yvr-{{ namespace }}-control"
+  - vpc_name: "yvr-{{ namespace }}-control-pane"
     vpc_routing: "regional"
     vpc_description: "{{ namespace }}_Control_Pane_Network"
     vpc_subnet_mode: "custom"
