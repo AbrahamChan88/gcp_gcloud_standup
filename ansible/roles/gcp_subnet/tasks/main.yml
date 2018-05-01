@@ -1,0 +1,28 @@
+---
+- name: Create a subnet for Control ENV
+  command: gcloud compute --project={{ project_id }} networks subnets create {{ item.subnet_name }} --network={{ item.subnet_network }} --range={{ item.subnet_range }} --description={{ item.subnet_description }} --enable-private-ip-google-access --region={{ item.subnet_region }}
+  with_items: "{{ subnet_network_control_pane }}"
+  register: output_subnets_control_pane
+
+- name: debug Control subnet creation
+  debug: var=output_subnets_control
+  when: debug is defined and debug|bool == True
+
+- name: Create subnets for PreProduction ENV
+  command: gcloud compute --project={{ project_id }} networks subnets create {{ item.subnet_name }} --network={{ item.subnet_network }} --range={{ item.subnet_range }} --description={{ item.subnet_description }} --enable-private-ip-google-access --region={{ item.subnet_region }}
+  with_items: "{{ subnet_network_preprod }}"
+  register: output_subnets_preprod
+
+- name: debug PreProduction subnets creation
+  debug: var=output_subnets_preprod
+  when: debug is defined and debug|bool == True
+
+- name: Create subnets for Production ENV
+  command: gcloud compute --project={{ project_id }} networks subnets create {{ item.subnet_name }} --network={{ item.subnet_network }} --range={{ item.subnet_range }} --description={{ item.subnet_description }} --enable-private-ip-google-access --region={{ item.subnet_region }}
+  with_items: "{{ subnet_network_prod }}"
+  register: output_subnets_prod
+
+- name: debug Production subnets creation
+  debug: var=output_subnets_prod
+  when: debug is defined and debug|bool == True
+...

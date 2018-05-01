@@ -1,0 +1,17 @@
+[preprod]
+localhost ansible_connection=local ansible_python_interpreter=python
+
+[preprod:children]
+#If manual entry is required: hostname #ansible_host=<IP> ansible_ssh_user=<user>
+controlbox_host
+webapp_host
+jenkins_host
+bastion_host
+
+[controlbox_host]
+
+[webapp_host]
+
+[jenkins_host]
+
+[bastion_host]

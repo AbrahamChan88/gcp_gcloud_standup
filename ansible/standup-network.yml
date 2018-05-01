@@ -1,0 +1,10 @@
+---
+- hosts: localhost
+  connection: local
+
+  roles:
+    - { role: gcp_vpc, tags: ['vpc'] }
+    - { role: gcp_subnet, tags: ['subnet'] }
+    - { role: gcp_firewall, tags: ['firewall'] }
+    - { role: gcp_instance, tags: ['instance'] }
+...

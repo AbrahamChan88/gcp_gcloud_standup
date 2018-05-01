@@ -1,0 +1,27 @@
+---
+- name: Create a bastion instance in the Control Pane ENV
+  command: gcloud compute --project={{ project_id }} instances create {{ namespace }}-control-bastion --zone={{ region_zone }} --machine-type=custom-1-2048 --subnet={{ namespace }}-control --metadata=owner={{ owner }},startup-script=\#\!\ /bin/bash$'\n'yum\ install\ bind-utils,block-project-ssh-keys=true,ssh-keys=abrahamchan:ssh-rsa\ AAAAB3NzaC1yc2EAAAABJQAAAgEAhA9\+ykw3GY/q3JRcvtYGehNvbehcsdOYf0WbMuvh6vd5MWpxxOXY3FdBnvNi5699SScMS1cTPbDilMvEoAWFb4O4hyo/Al/ZMaRK05SPg1i5tBMsrOVLNYefDLVLrGYMAk2uvFDNYLvYft2/nfsvq85LoNd4tGHiwO\+SpeKGTLGVlFZIn3mk21D7ogNGAs3fDjL0JiFJ5U75FGaXGLh/zyDT8bCkUUZhEIJu\+kKPHNVP1viKGes3IazzlFDUaAasrKl0opl0OdjVzP2bv3jECXvSqo4TRCMpF4oYJCnH3eX0PuWsn5zBx91\+kOamffBLI4kaOxMhsvP0PsObANoBShzP6N6HzZN/j59RdCqxeWaNdLjTJq9x9L1cU1L0vLaWWekIPX/iXDZ30D/zpFH6RivrjI4OSs/ADJSWcMIBOjT1TYSKA4njjGc\+NUmxyOWqVK3yo2KOrCFfVXhP1tzy7OrD\+ensEiGmIQbJlO98PxQZ\+UpATXSvWbXOT8dS52PWHq1GW9MlBW2p20534t9EoZNgIyzNVWWaVa/WiS1fCjjrAGRH0DbJEyTL0OkCAWLbFJMVkYfDx9HJQq2Q8ZAttbySQh9zz5AFCZm47se4obW0wrrZgCsIaqBT/g8KbrANDWE\+wkTnuiY\+UCaWVuRSaDLDCvH2ul2CuGnJDTZyT3k=\ abrahamchan --maintenance-policy=MIGRATE --scopes=https://www.googleapis.com/auth/cloud-platform --min-cpu-platform=Automatic --image=centos-7-v20180401 --image-project=centos-cloud --boot-disk-size=10GB --boot-disk-type=pd-standard --boot-disk-device-name={{ namespace }}-control-bastion --tags=yvr-{{ namespace }}-control
+  register: output_instances_control_pane
+
+- name: debug bastion instances creation in the Control Pane ENV
+  debug: var=output_instances_control_pane
+  when: debug is defined and debug|bool == True
+
+- name: Create a instances in the PreProduction ENV
+  command: gcloud compute --project={{ project_id }} instances create {{ item.instances_name }} --zone={{ region_zone }} --machine-type={{ item.instances_machine_type }} --subnet={{ item.instances_subnet}} --metadata={{ item.instances_metadata }}, --no-address --maintenance-policy=MIGRATE --scopes=https://www.googleapis.com/auth/cloud-platform --min-cpu-platform=Automatic --image={{ item.instances_image }} --image-project={{ item.instances_image_project }} --boot-disk-size={{ item.instances_boot_disk_size }} --boot-disk-type={{ item.instances_boot_disk_type }} --boot-disk-device-name={{ item.instances_boot_device_name }} --tags={{ item.instances_tags }}
+  with_items: "{{ instances_preprod }}"
+  register: output_instances_preprod
+
+- name: debug instances creation in the PreProduction ENV
+  debug: var=output_instances_preprod
+  when: debug is defined and debug|bool == True
+
+- name: Create a instances in the Production ENV
+  command: gcloud compute --project={{ project_id }} instances create {{ item.instances_name }} --zone={{ region_zone }} --machine-type={{ item.instances_machine_type }} --subnet={{ item.instances_subnet}} --metadata={{ item.instances_metadata }}, --no-address --maintenance-policy=MIGRATE --scopes=https://www.googleapis.com/auth/cloud-platform --min-cpu-platform=Automatic --image={{ item.instances_image }} --image-project={{ item.instances_image_project }} --boot-disk-size={{ item.instances_boot_disk_size }} --boot-disk-type={{ item.instances_boot_disk_type }} --boot-disk-device-name={{ item.instances_boot_device_name }} --tags={{ item.instances_tags }}
+  with_items: "{{ instances_prod }}"
+  register: output_instances_prod
+
+- name: debug instances creation in the Production ENV
+  debug: var=output_instances_prod
+  when: debug is defined and debug|bool == True
+...

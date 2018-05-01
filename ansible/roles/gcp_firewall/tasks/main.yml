@@ -1,0 +1,28 @@
+---
+- name: Create firewall rules for Control ENV
+  command: gcloud compute --project={{ project_id}} firewall-rules create {{ item.fw_name }} --description={{ item.fw_description }} --direction={{ item.fw_direction }} --priority={{ item.fw_priority }} --network={{ item.fw_network }} --action={{ item.fw_action }} --rules={{ item.fw_rules }} --source-ranges={{ item.fw_source_range }} --target-tags={{ item.fw_target }}
+  with_items: "{{ fw_network_control_pane }}"
+  register: output_fw_network_control_pane
+
+- name: debug Control firewall rules creation
+  debug: var=output_fw_network_control
+  when: debug is defined and debug|bool == True
+
+- name: Create firewall rules for PreProduction ENV
+  command: gcloud compute --project={{ project_id}} firewall-rules create {{ item.fw_name }} --description={{ item.fw_description }} --direction={{ item.fw_direction }} --priority={{ item.fw_priority }} --network={{ item.fw_network }} --action={{ item.fw_action }} --rules={{ item.fw_rules }} --source-ranges={{ item.fw_source_range }} --target-tags={{ item.fw_target }}
+  with_items: "{{ fw_network_preprod }}"
+  register: output_fw_network_preprod
+
+- name: debug PreProduction firewall rules creation
+  debug: var=output_fw_network_preprod
+  when: debug is defined and debug|bool == True
+
+- name: Create firewall rules for Production ENV
+  command: gcloud compute --project={{ project_id}} firewall-rules create {{ item.fw_name }} --description={{ item.fw_description }} --direction={{ item.fw_direction }} --priority={{ item.fw_priority }} --network={{ item.fw_network }} --action={{ item.fw_action }} --rules={{ item.fw_rules }} --source-ranges={{ item.fw_source_range }} --target-tags={{ item.fw_target }}
+  with_items: "{{ fw_network_prod }}"
+  register: output_fw_network_prod
+
+- name: debug Production firewall rules creation
+  debug: var=output_fw_network_prod
+  when: debug is defined and debug|bool == True
+...

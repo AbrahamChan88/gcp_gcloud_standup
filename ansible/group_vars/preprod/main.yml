@@ -1,0 +1,18 @@
+---
+ip_external_inbound_bastion: 10.183.0.0/16,143.112.144.129/32,135.0.164.68/32,24.114.26.106/32
+ports_external_inbound_bastion: tcp:80,tcp:443,tcp:22
+ip_range_control_pane: 10.88.1.0/24
+
+ip_range_preprod_control: 10.89.10.0/24
+ip_range_preprod_dmz: 10.89.1.0/24
+ip_range_preprod_sdmz: 10.89.2.0/24
+ip_range_preprod_db: 10.89.3.0/24
+
+ip_range_prod_control: 10.87.10.0/24
+ip_range_prod_dmz: 10.87.1.0/24
+ip_range_prod_sdmz: 10.87.2.0/24
+ip_range_prod_db: 10.87.3.0/24
+
+port_http: tcp:80
+ports_https_ssh: tcp:443,tcp:22
+...

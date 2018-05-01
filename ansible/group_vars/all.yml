@@ -1,0 +1,5 @@
+---
+project_id: iwcs-test
+debug: False
+region_zone: us-west1-a
+...

@@ -1,0 +1,28 @@
+---
+- name: Create VPC for Control ENV
+  command: gcloud compute --project={{ project_id }} networks create {{ item.vpc_name }} --bgp-routing-mode={{ item.vpc_routing }} --description={{ item.vpc_description }} --subnet-mode={{ item.vpc_subnet_mode }}
+  with_items: "{{ vpc_network_control }}"
+  register: output_vpc_network_control
+
+- name: debug Control VPC creation
+  debug: var=output_vpc_network_control
+  when: debug is defined and debug|bool == True
+
+- name: Create VPC for PreProduction ENV
+  command: gcloud compute --project={{ project_id }} networks create {{ item.vpc_name }} --bgp-routing-mode={{ item.vpc_routing }} --description={{ item.vpc_description }} --subnet-mode={{ item.vpc_subnet_mode }}
+  with_items: "{{ vpc_network_preprod }}"
+  register: output_vpc_network_preprod
+
+- name: debug PreProduction VPC creation
+  debug: var=output_vpc_network_preprod
+  when: debug is defined and debug|bool == True
+
+- name: Create VPC for Production ENV
+  command: gcloud compute --project={{ project_id }} networks create {{ item.vpc_name }} --bgp-routing-mode={{ item.vpc_routing }} --description={{ item.vpc_description }} --subnet-mode={{ item.vpc_subnet_mode }}
+  with_items: "{{ vpc_network_prod }}"
+  register: output_vpc_network_prod
+
+- name: debug Production VPC creation
+  debug: var=output_vpc_network_prod
+  when: debug is defined and debug|bool == True
+...
